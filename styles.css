@@ -7,11 +7,23 @@
 body, html {
     width: 100%;
     height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.bold-text {
+    font-weight: 700;
+    color: black;
+}
+
+.grey-p {
+    color: #6D7277;
+    font-size: 12px;
 }
 
 .content-ctr {
     border: 1px solid gray;
-    width: 100%;
+    max-width: 500px;
+    min-width: 210px;
     margin: 0 auto;
 }
 
@@ -20,10 +32,6 @@ body, html {
     align-items: center;
     padding-top: 5px;
     padding-bottom: 5px;
-}
-
-.header-info>p {
-    color: #6D7277;
 }
 
 .back-arrow {
@@ -49,30 +57,68 @@ body, html {
     width: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+   
 }
 
 .hero-img>img {
     width: 100%;
 }
 
-.hero-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin: -25px 10px 10px 10px;
-}
-
 .hero-content>img {
-    width: 20%;
+    max-width: 100px;
     border-radius: 50%;
     border: 4px solid white;
+    position: absolute;
+    top: 65%;
+    margin-left: 10px;
 }
 
-.hero-content>a {
-    margin-bottom: 15px;
+.hero-content>button {
     padding: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
     border-radius: 25px;
     text-decoration: none;
+    border: none;
     background-color: #1A8CD8;
     color: white;
+    position: absolute;
+    right: 0;
+}
+
+.user-info-ctr {
+    margin: 75px 10px 0;
+}
+
+@media only screen and (min-width: 350px) {
+    .user-info-ctr {
+        margin-top: 60px;
+    }
+}
+
+@media only screen and (min-width: 400px) {
+    .user-info-ctr {
+        margin-top: 55px;
+    }
+}
+
+@media only screen and (min-width: 450px) {
+    .user-info-ctr {
+        margin-top: 50px;
+    }
+}
+
+@media only screen and (min-width: 500px) {
+    .user-info-ctr {
+        margin-top: 45px;
+    }
+}
+
+.follows {
+    display: flex;
+}
+
+.follows p:first-child{
+    margin-right: 10px;
 }
