@@ -49,6 +49,7 @@ const user2 = {
 // declare variables for dom elements
 const headerCtr = document.getElementById('header-ctr');
 const heroCtr = document.getElementById('hero-ctr');
+const userInfo = document.getElementById('user-info-ctr');
 
 // create header section
 const numOfTweets = user1.tweets.length;
@@ -56,10 +57,10 @@ headerCtr.innerHTML = `
     <div class="back-arrow"> ← </div>    
     <div class="header-info">    
         <div class="name-display">
-            <h3>${user1.displayName}</h3>
+            <h4>${user1.displayName}</h4>
             <img src="./assets/verified-symbol.jpeg">
         </div>
-        <p>${numOfTweets} Tweets</p>
+        <p class="grey-p">${numOfTweets} Tweets</p>
     </div>
 `;
 
@@ -70,9 +71,20 @@ heroCtr.innerHTML = `
     </div>
     <div class="hero-content">
         <img src=${user1.avatarURL}>
-        <a href="#">Following</a>
+        <button>Following</button>
     </div>
 `;
-// const heroImg = document.getElementById('hero-img')
-// heroImg.style.background = `no-repeat center/100% url(${user1.coverPhotoURL})`
-//  id="hero-img" class="hero-img"
+
+// create conetent for user info section
+userInfo.innerHTML = `
+    <div class="name-display">
+        <h4>${user1.displayName}</h4>
+        <img src="./assets/verified-symbol.jpeg">
+    </div>
+    <p class="grey-p">${user1.userName}</p>
+    <p class="grey-p">🗓 Joined ${user1.joinedDate}</p>
+    <div class="follows">
+        <p class="grey-p"><span class="bold-text">${user1.followingCount}</span> Following</p>
+        <p class="grey-p"><span class="bold-text">${user1.followerCount}</span> Following</p>
+    </div>
+`;
