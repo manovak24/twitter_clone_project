@@ -46,13 +46,42 @@ const user2 = {
     ]
 };
 
+// function to figoure out how much time has passed since tweet was posted
+const epochs = [
+    ['year', 31536000],
+    ['month', 2592000],
+    ['day', 86400],
+    ['hour', 3600],
+    ['minute', 60],
+    ['second', 1]
+];
+
+const getDuration = (timeAgoInSeconds) => {
+    for (let [name, seconds] of epochs) {
+        const interval = Math.floor(timeAgoInSeconds / seconds);
+        if (interval >= 1) {
+            return {
+                interval: interval,
+                epoch: name
+            };
+        }
+    }
+};
+
+const timeAgo = (date) => {
+    const timeAgoInSeconds = Math.floor((new Date() - new Date(date)) / 1000);
+    const {interval, epoch} = getDuration(timeAgoInSeconds);
+    const suffix = interval === 1 ? '' : 's';
+    return `${interval} ${epoch}${suffix} ago`;
+};
+
 // declare variables for dom elements
 const headerCtr = document.getElementById('header-ctr');
 const heroCtr = document.getElementById('hero-ctr');
-const userInfo = document.getElementById('user-info-ctr');
+const userInfoCtr = document.getElementById('user-info-ctr');
+const tweetsCtr = document.getElementById('tweets-ctr')
 
 // create header section
-const numOfTweets = user1.tweets.length;
 headerCtr.innerHTML = `
     <div class="back-arrow"> ← </div>    
     <div class="header-info">    
@@ -60,7 +89,7 @@ headerCtr.innerHTML = `
             <h4>${user1.displayName}</h4>
             <img src="./assets/verified-symbol.jpeg">
         </div>
-        <p class="grey-p">${numOfTweets} Tweets</p>
+        <p class="grey-p">${user1.tweets.length} Tweets</p>
     </div>
 `;
 
@@ -76,15 +105,52 @@ heroCtr.innerHTML = `
 `;
 
 // create conetent for user info section
-userInfo.innerHTML = `
+userInfoCtr.innerHTML = `
     <div class="name-display">
         <h4>${user1.displayName}</h4>
         <img src="./assets/verified-symbol.jpeg">
     </div>
     <p class="grey-p">${user1.userName}</p>
     <p class="grey-p">🗓 Joined ${user1.joinedDate}</p>
-    <div class="follows">
+    <div class="follow-ctr">
         <p class="grey-p"><span class="bold-text">${user1.followingCount}</span> Following</p>
         <p class="grey-p"><span class="bold-text">${user1.followerCount}</span> Following</p>
     </div>
 `;
+
+// create content for tweet container section
+const timePassed = timeAgo(user1.tweets[0].timestamp)
+tweetsCtr.innerHTML = `
+    <div class="tweet-nav">
+        <div class="tab tab-active">
+            <p>Tweets</p>
+            <div class="tab-border tab-border-active"></div>
+        </div>
+
+        <div class="tab">
+            <p>Tweets & Replies</p>
+            <div class="tab-border"></div>
+        </div>
+
+        <div class="tab">
+            <p>Media</p>
+            <div class="tab-border"></div>
+        </div>
+
+        <div class="tab">
+            <p>Likes</p>
+            <div class="tab-border"></div>
+        </div>
+    </div>
+
+    <div class="tweet-content">
+        <img src=${user1.avatarURL}>
+        <div class="name-display">
+            <h4>${user1.displayName}</h4>
+            <img src="./assets/verified-symbol.jpeg">
+            <p class="grey-p">${user1.userName} • </p>
+            <p class="grey-p">${timePassed}</p>
+        </div>
+    </div>
+`;
+
