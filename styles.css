@@ -21,9 +21,9 @@ body, html {
 }
 
 .content-ctr {
-    border: 1px solid gray;
+    /* border: 1px solid gray; */
     max-width: 500px;
-    min-width: 210px;
+    min-width: 350px;
     margin: 0 auto;
 }
 
@@ -87,19 +87,85 @@ body, html {
     right: 0;
 }
 
+.hero-content>button:hover {
+    cursor: pointer;
+    opacity: .85;
+}
+
 .user-info-ctr {
     margin: 75px 10px 0;
 }
 
-@media only screen and (min-width: 350px) {
-    .user-info-ctr {
-        margin-top: 60px;
-    }
+.user-info-ctr>p {
+    margin-bottom: 10px;
+}
+
+.follow-ctr {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.follow-ctr p:first-child{
+    margin-right: 10px;
+}
+
+.tweet-nav {
+    display: flex;
+}
+
+.tab {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #687681;
+    font-size: 10px;
+    padding: 20px auto;
+}
+
+.tab>p {
+    margin: 15px auto;
+}
+
+.tab-border {
+    border-bottom: 2px solid #ebebeb;
+    width: 100%;
+    padding-top: 2px;
+}
+
+.tab:hover {
+    cursor: pointer;
+    opacity: .25;
+    background-color: #E2E3E3;
+}
+
+.tab-active {
+    color: #1A8CD8;
+}
+
+.tab-border-active {
+    border-bottom: 3px solid #1A8CD8;
+    width: 100%;
+    padding-top: 1px;
+}
+
+.tweet-content {
+    width: 100%;
+    padding: 10px;
+    border-bottom: 2px solid #ebebeb;
+}
+
+.tweet-content>img {
+    width: 50px;
+    border-radius: 50%;
 }
 
 @media only screen and (min-width: 400px) {
     .user-info-ctr {
         margin-top: 55px;
+    }
+    .tab {
+        font-size: 12px;
     }
 }
 
@@ -107,18 +173,16 @@ body, html {
     .user-info-ctr {
         margin-top: 50px;
     }
+    .tab{
+        font-size: 12px;
+    }
 }
 
 @media only screen and (min-width: 500px) {
     .user-info-ctr {
         margin-top: 45px;
     }
-}
-
-.follows {
-    display: flex;
-}
-
-.follows p:first-child{
-    margin-right: 10px;
+    .tab{
+        font-size: 14px;
+    }
 }
