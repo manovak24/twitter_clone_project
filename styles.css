@@ -58,7 +58,6 @@ body, html {
     display: flex;
     flex-direction: column;
     position: relative;
-   
 }
 
 .hero-img>img {
@@ -153,11 +152,26 @@ body, html {
     width: 100%;
     padding: 10px;
     border-bottom: 2px solid #ebebeb;
+    display: flex;
 }
 
 .tweet-content>img {
     width: 50px;
     border-radius: 50%;
+}
+
+.tweet-name-display {
+    display: flex;
+    align-items: center;
+}
+
+.tweet-name-display>h3 {
+    margin-right: 2px;
+}
+
+.tweet-name-display>img {
+    width: 18px;
+    height: 18px;
 }
 
 @media only screen and (min-width: 400px) {
