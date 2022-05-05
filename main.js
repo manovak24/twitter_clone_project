@@ -9,11 +9,11 @@ const user1 = {
     tweets: [
         {
             text: 'I admit to judging books by their cover',
-            timestamp: '2/10/2021 00:01:20'
+            timestamp: '1/1/2022 00:01:20'
         },
         {
             text: 'Starship to the moon',
-            timestamp: '2/09/2021 18:37:12'
+            timestamp: '12/09/2021 18:37:12'
         },
         {
             text: 'Out on launch pad, engine swap underway',
@@ -51,7 +51,7 @@ const epochs = [
     ['year', 31536000],
     ['month', 2592000],
     ['day', 86400],
-    ['hour', 3600],
+    ['h', 3600],
     ['minute', 60],
     ['second', 1]
 ];
@@ -68,12 +68,30 @@ const getDuration = (timeAgoInSeconds) => {
     }
 };
 
+
 const timeAgo = (date) => {
     const timeAgoInSeconds = Math.floor((new Date() - new Date(date)) / 1000);
     const {interval, epoch} = getDuration(timeAgoInSeconds);
-    const suffix = interval === 1 ? '' : 's';
-    return `${interval} ${epoch}${suffix} ago`;
+    console.log(interval)
+    console.log(epoch)
+    console.log(date)
+    // const suffix = interval === 1 ? '' : 's';
+    // return `${interval} ${epoch} ${suffix} ago`;
+
+    const postDate = new Date(date);
+    const currentYear = new Date().getFullYear();
+    const postYear = new Date(user1.tweets[0].timestamp).getFullYear();
+    if(epoch === 'h') {
+        return `${interval}${epoch}`;
+    } else if( currentYear === postYear ) {
+        return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4, -6);
+    } else {
+        return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4);
+    }
+    
 };
+
+// console.log(new Date(user1.tweets[1].timestamp).getFullYear(), new Date().getFullYear())
 
 // declare variables for dom elements
 const headerCtr = document.getElementById('header-ctr');
