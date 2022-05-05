@@ -163,11 +163,16 @@ tweetsCtr.innerHTML = `
 
     <div class="tweet-content">
         <img src=${user1.avatarURL}>
-        <div class="name-display">
-            <h4>${user1.displayName}</h4>
-            <img src="./assets/verified-symbol.jpeg">
-            <p class="grey-p">${user1.userName} • </p>
-            <p class="grey-p">${timePassed}</p>
+        <div>
+            <div class="tweet-name-display">
+                <h4>${user1.displayName}</h4>
+                <img src="./assets/verified-symbol.jpeg">
+                <p class="grey-p">${user1.userName} • </p>
+                <p class="grey-p">${timePassed}</p>
+            </div>
+            <div>
+                <p>${user1.tweets[0].text}
+            </div>
         </div>
     </div>
 `;
