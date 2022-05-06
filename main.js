@@ -9,7 +9,7 @@ const user1 = {
     tweets: [
         {
             text: 'I admit to judging books by their cover',
-            timestamp: '1/1/2022 00:01:20'
+            timestamp: '5/6/2022 10:01:20'
         },
         {
             text: 'Starship to the moon',
@@ -46,58 +46,12 @@ const user2 = {
     ]
 };
 
-// function to figoure out how much time has passed since tweet was posted
-const epochs = [
-    ['year', 31536000],
-    ['month', 2592000],
-    ['day', 86400],
-    ['h', 3600],
-    ['minute', 60],
-    ['second', 1]
-];
-
-const getDuration = (timeAgoInSeconds) => {
-    for (let [name, seconds] of epochs) {
-        const interval = Math.floor(timeAgoInSeconds / seconds);
-        if (interval >= 1) {
-            return {
-                interval: interval,
-                epoch: name
-            };
-        }
-    }
-};
-
-
-const timeAgo = (date) => {
-    const timeAgoInSeconds = Math.floor((new Date() - new Date(date)) / 1000);
-    const {interval, epoch} = getDuration(timeAgoInSeconds);
-    console.log(interval)
-    console.log(epoch)
-    console.log(date)
-    // const suffix = interval === 1 ? '' : 's';
-    // return `${interval} ${epoch} ${suffix} ago`;
-
-    const postDate = new Date(date);
-    const currentYear = new Date().getFullYear();
-    const postYear = new Date(user1.tweets[0].timestamp).getFullYear();
-    if(epoch === 'h') {
-        return `${interval}${epoch}`;
-    } else if( currentYear === postYear ) {
-        return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4, -6);
-    } else {
-        return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4);
-    }
-    
-};
-
-// console.log(new Date(user1.tweets[1].timestamp).getFullYear(), new Date().getFullYear())
-
 // declare variables for dom elements
 const headerCtr = document.getElementById('header-ctr');
 const heroCtr = document.getElementById('hero-ctr');
 const userInfoCtr = document.getElementById('user-info-ctr');
-const tweetsCtr = document.getElementById('tweets-ctr')
+const tweetsNav = document.getElementById('tweets-nav');
+const tweetsCtr = document.getElementById('tweets-ctr');
 
 // create header section
 headerCtr.innerHTML = `
@@ -136,9 +90,8 @@ userInfoCtr.innerHTML = `
     </div>
 `;
 
-// create content for tweet container section
-const timePassed = timeAgo(user1.tweets[0].timestamp)
-tweetsCtr.innerHTML = `
+// create content for tweet nav section
+tweetsNav.innerHTML = `
     <div class="tweet-nav">
         <div class="tab tab-active">
             <p>Tweets</p>
@@ -160,8 +113,59 @@ tweetsCtr.innerHTML = `
             <div class="tab-border"></div>
         </div>
     </div>
+`;
 
-    <div class="tweet-content">
+// for of loop to set the innerHTML for each tweet with text and time stamp
+for (let tweet of user1.tweets) {
+    // function to figoure out how much time has passed since tweet was posted
+    const epochs = [
+        ['year', 31536000],
+        ['month', 2592000],
+        ['day', 86400],
+        ['h', 3600],
+        ['minute', 60],
+        ['second', 1]
+    ];
+
+    const getDuration = (timeAgoInSeconds) => {
+        for (let [name, seconds] of epochs) {
+            const interval = Math.floor(timeAgoInSeconds / seconds);
+            if (interval >= 1) {
+                return {
+                    interval: interval,
+                    epoch: name
+                };
+            }
+        }
+    };
+
+    const timeAgo = (date) => {
+        const timeAgoInSeconds = Math.floor((new Date() - new Date(date)) / 1000);
+        const {interval, epoch} = getDuration(timeAgoInSeconds);
+        console.log(interval)
+        console.log(epoch)
+        console.log(date)
+        // const suffix = interval === 1 ? '' : 's';
+        // return `${interval} ${epoch} ${suffix} ago`;
+
+        const postDate = new Date(date);
+        const currentYear = new Date().getFullYear();
+        const postYear = new Date(tweet.timestamp).getFullYear();
+        if(epoch === 'h') {
+            return `${interval}${epoch}`;
+        } else if( currentYear === postYear ) {
+            return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4, -6);
+        } else {
+            return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4);
+        }
+    };
+
+    // console.log(new Date(user1.tweets[1].timestamp).getFullYear(), new Date().getFullYear())
+
+    const tweetDiv = document.createElement('div');
+    const timePassed = timeAgo(tweet.timestamp)
+    tweetDiv.classList.add('tweet-content');
+    tweetDiv.innerHTML = `
         <img src=${user1.avatarURL}>
         <div>
             <div class="tweet-name-display">
@@ -171,9 +175,9 @@ tweetsCtr.innerHTML = `
                 <p class="grey-p">${timePassed}</p>
             </div>
             <div class="tweet">
-                <p>${user1.tweets[0].text}
+                <p>${tweet.text}</p>
             </div>
         </div>
-    </div>
-`;
-
+    `
+    tweetsCtr.appendChild(tweetDiv);
+}
