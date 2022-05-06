@@ -153,6 +153,7 @@ body, html {
     padding: 10px;
     border-bottom: 2px solid #ebebeb;
     display: flex;
+    align-items: center;
 }
 
 .tweet-content>img {
@@ -174,6 +175,10 @@ body, html {
     height: 18px;
 }
 
+.tweet>p {
+    font-size: 14px;
+}
+
 @media only screen and (min-width: 400px) {
     .user-info-ctr {
         margin-top: 55px;
@@ -188,15 +193,12 @@ body, html {
         margin-top: 50px;
     }
     .tab{
-        font-size: 12px;
+        font-size: 14px;
     }
 }
 
 @media only screen and (min-width: 500px) {
     .user-info-ctr {
         margin-top: 45px;
-    }
-    .tab{
-        font-size: 14px;
     }
 }
