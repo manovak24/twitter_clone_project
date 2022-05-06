@@ -170,7 +170,7 @@ tweetsCtr.innerHTML = `
                 <p class="grey-p">${user1.userName} • </p>
                 <p class="grey-p">${timePassed}</p>
             </div>
-            <div>
+            <div class="tweet">
                 <p>${user1.tweets[0].text}
             </div>
         </div>
