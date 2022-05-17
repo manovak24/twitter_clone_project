@@ -53,25 +53,39 @@ const userInfoCtr = document.getElementById('user-info-ctr');
 const tweetsNav = document.getElementById('tweets-nav');
 const tweetsCtr = document.getElementById('tweets-ctr');
 
+// URL search params and query string
+function userQuery() {
+    const params = new URLSearchParams(window.location.search)
+    for (const param of params) {
+        if(param[1] === 'user1') {
+            return user1
+        } else if (param[1] === 'user2') {
+            return user2
+        }
+    }   
+}
+
+
+
 // create header section
 headerCtr.innerHTML = `
     <div class="back-arrow"> ← </div>    
     <div class="header-info">    
         <div class="name-display">
-            <h4>${user1.displayName}</h4>
+            <h4>${userQuery().displayName}</h4>
             <img src="./assets/verified-symbol.jpeg">
         </div>
-        <p class="grey-p">${user1.tweets.length} Tweets</p>
+        <p class="grey-p">${userQuery().tweets.length} Tweets</p>
     </div>
 `;
 
 // create hero container for background image, profile image, and following button
 heroCtr.innerHTML = `
     <div class="hero-img">
-        <img src=${user1.coverPhotoURL}>
+        <img src=${userQuery().coverPhotoURL}>
     </div>
     <div class="hero-content">
-        <img src=${user1.avatarURL}>
+        <img src=${userQuery().avatarURL}>
         <button>Following</button>
     </div>
 `;
@@ -79,14 +93,14 @@ heroCtr.innerHTML = `
 // create conetent for user info section
 userInfoCtr.innerHTML = `
     <div class="name-display">
-        <h4>${user1.displayName}</h4>
+        <h4>${userQuery().displayName}</h4>
         <img src="./assets/verified-symbol.jpeg">
     </div>
-    <p class="grey-p">${user1.userName}</p>
-    <p class="grey-p">🗓 Joined ${user1.joinedDate}</p>
+    <p class="grey-p">${userQuery().userName}</p>
+    <p class="grey-p">🗓 Joined ${userQuery().joinedDate}</p>
     <div class="follow-ctr">
-        <p class="grey-p"><span class="bold-text">${user1.followingCount}</span> Following</p>
-        <p class="grey-p"><span class="bold-text">${user1.followerCount}</span> Following</p>
+        <p class="grey-p"><span class="bold-text">${userQuery().followingCount}</span> Following</p>
+        <p class="grey-p"><span class="bold-text">${userQuery().followerCount}</span> Following</p>
     </div>
 `;
 
@@ -116,7 +130,7 @@ tweetsNav.innerHTML = `
 `;
 
 // for of loop to set the innerHTML for each tweet with text and time stamp
-for (let tweet of user1.tweets) {
+for (let tweet of userQuery().tweets) {
     // function to figoure out how much time has passed since tweet was posted
     const epochs = [
         ['year', 31536000],
@@ -160,19 +174,19 @@ for (let tweet of user1.tweets) {
         }
     };
 
-    // console.log(new Date(user1.tweets[1].timestamp).getFullYear(), new Date().getFullYear())
+    // console.log(new Date(userQuery().tweets[1].timestamp).getFullYear(), new Date().getFullYear())
 
     // create tweet content for each inidividual tweet
     const tweetDiv = document.createElement('div');
     const timePassed = timeAgo(tweet.timestamp)
     tweetDiv.classList.add('tweet-content');
     tweetDiv.innerHTML = `
-        <img src=${user1.avatarURL}>
+        <img src=${userQuery().avatarURL}>
         <div>
             <div class="tweet-name-display">
-                <h4>${user1.displayName}</h4>
+                <h4>${userQuery().displayName}</h4>
                 <img src="./assets/verified-symbol.jpeg">
-                <p class="grey-p">${user1.userName} • </p>
+                <p class="grey-p">${userQuery().userName} • </p>
                 <p class="grey-p">${timePassed}</p>
             </div>
             <div class="tweet">
