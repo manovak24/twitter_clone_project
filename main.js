@@ -162,6 +162,7 @@ for (let tweet of user1.tweets) {
 
     // console.log(new Date(user1.tweets[1].timestamp).getFullYear(), new Date().getFullYear())
 
+    // create tweet content for each inidividual tweet
     const tweetDiv = document.createElement('div');
     const timePassed = timeAgo(tweet.timestamp)
     tweetDiv.classList.add('tweet-content');
