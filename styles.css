@@ -44,8 +44,8 @@ body, html {
     align-items: center;
 }
 
-.name-display>h3 {
-    margin-right: 2px;
+.name-display>h4 {
+    margin-right: 5px;
 }
 
 .name-display>img {
@@ -159,6 +159,7 @@ body, html {
 .tweet-content>img {
     width: 50px;
     border-radius: 50%;
+    margin-right: 10px;
 }
 
 .tweet-name-display {
@@ -166,17 +167,23 @@ body, html {
     align-items: center;
 }
 
-.tweet-name-display>h3 {
-    margin-right: 2px;
+.tweet-name-display>h4 {
+    margin-right: 5px;
 }
 
 .tweet-name-display>img {
     width: 18px;
     height: 18px;
+    margin-right: 5px;
+}
+
+.tweet-name-display>p {
+    margin-right: 5px;
 }
 
 .tweet>p {
-    font-size: 14px;
+    font-size: 12px;
+    margin-top: 5px;
 }
 
 @media only screen and (min-width: 400px) {
