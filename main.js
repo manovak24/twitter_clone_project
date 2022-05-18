@@ -60,19 +60,27 @@ const tweetsCtr = document.getElementById('tweets-ctr');
 // URL search params and query string
 function userQuery() {
     let userToDisplay;
+    const url = window.location.href;
     const params = new URLSearchParams(window.location.search);
-    for (const param of params) {
-        for(let user in twitterUsers) {
-            // console.log(twitterUsers[user])
-            // console.log(user)
-            if(param[1] === user) {
-                userToDisplay = twitterUsers[user];
-            }
-        }
 
-        // console.log(userToDisplay)
-        return userToDisplay;
-    }   
+    // Added outside if statement to detrmine if the url contains query parameters. If no ? is present it will execute code below, but if there is a ? it will go to the else statement where it'll determine which user info to display
+    if(!url.includes('?')) {
+        return userToDisplay = twitterUsers.user1
+    } else {
+        for (const param of params) {
+            for(let user in twitterUsers) {
+                // console.log(twitterUsers[user])
+                // console.log(user)
+                if(param[1] === user) {
+                    userToDisplay = twitterUsers[user];
+                }
+              
+            }
+    
+            // console.log(userToDisplay)
+            return userToDisplay;
+        } 
+    }
 }
 
 console.log(userQuery())
