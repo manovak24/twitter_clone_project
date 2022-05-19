@@ -77,7 +77,25 @@ function userQuery() {
 
 // wrapping all of the display code inside if statement to check if the url contains query parameters. If no query paramenters it will display the combined timeline. If url contains query parameters it will go to else block to execute code for individual user timeline
 if(!url.includes('?') && url.indexOf('timeline') > -1) {
-    console.log('test')
+    for (let tweet of twitterUsers.user1.tweets) {
+        const tweetDiv = document.createElement('div');
+        tweetDiv.classList.add('tweet-content');
+        tweetDiv.innerHTML = `
+            <img src=${twitterUsers.user1.avatarURL}>
+            <div>
+                <div class="tweet-name-display">
+                    <h4>${twitterUsers.user1.displayName}</h4>
+                    <img src="./assets/verified-symbol.jpeg">
+                    <p class="grey-p">${twitterUsers.user1.userName} • </p>
+                    <p class="grey-p"></p>
+                </div>
+                <div class="tweet">
+                    <p>${tweet.text}</p>
+                </div>
+            </div>
+        `;
+        tweetsCtr.appendChild(tweetDiv);
+    }
 } else {
     // create header section
     headerCtr.innerHTML = `
