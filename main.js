@@ -56,160 +56,156 @@ const heroCtr = document.getElementById('hero-ctr');
 const userInfoCtr = document.getElementById('user-info-ctr');
 const tweetsNav = document.getElementById('tweets-nav');
 const tweetsCtr = document.getElementById('tweets-ctr');
+const url = window.location.href;
 
 // URL search params and query string
 function userQuery() {
     let userToDisplay;
-    let allTweetsDisplay;
-    const url = window.location.href;
     const params = new URLSearchParams(window.location.search);
-
-    // Added outside if statement to detrmine if the url contains query parameters. If no ? is present it will execute code below, but if there is a ? it will go to the else statement where it'll determine which user info to display
-    if(!url.includes('?')) {
-        for (let user in twitterUsers) {
-            console.log(user)
-        }
-    } else {
-        for (const param of params) {
-            for(let user in twitterUsers) {
-                if(param[1] === user) {
-                    userToDisplay = twitterUsers[user];
-                }
+    
+    for (const param of params) {
+        for(let user in twitterUsers) {
+            if(param[1] === user) {
+                userToDisplay = twitterUsers[user];
             }
-            return userToDisplay;
-        } 
+        }
+        return userToDisplay;
     }
-    // console.log(allTweetsDisplay)
 }
 
 // console.log(userQuery())
 
-// create header section
-headerCtr.innerHTML = `
-    <div class="back-arrow"> ← </div>    
-    <div class="header-info">    
+// wrapping all of the display code inside if statement to check if the url contains query parameters. If no query paramenters it will display the combined timeline. If url contains query parameters it will go to else block to execute code for individual user timeline
+if(!url.includes('?') && url.indexOf('timeline') > -1) {
+    console.log('test')
+} else {
+    // create header section
+    headerCtr.innerHTML = `
+        <div class="back-arrow"> ← </div>    
+        <div class="header-info">    
+            <div class="name-display">
+                <h4>${userQuery().displayName}</h4>
+                <img src="./assets/verified-symbol.jpeg">
+            </div>
+            <p class="grey-p">${userQuery().tweets.length} Tweets</p>
+        </div>
+    `;
+
+    // create hero container for background image, profile image, and following button
+    heroCtr.innerHTML = `
+        <div class="hero-img">
+            <img src=${userQuery().coverPhotoURL}>
+        </div>
+        <div class="hero-content">
+            <img src=${userQuery().avatarURL}>
+            <button>Following</button>
+        </div>
+    `;
+
+    // create conetent for user info section
+    userInfoCtr.innerHTML = `
         <div class="name-display">
             <h4>${userQuery().displayName}</h4>
             <img src="./assets/verified-symbol.jpeg">
         </div>
-        <p class="grey-p">${userQuery().tweets.length} Tweets</p>
-    </div>
-`;
-
-// create hero container for background image, profile image, and following button
-heroCtr.innerHTML = `
-    <div class="hero-img">
-        <img src=${userQuery().coverPhotoURL}>
-    </div>
-    <div class="hero-content">
-        <img src=${userQuery().avatarURL}>
-        <button>Following</button>
-    </div>
-`;
-
-// create conetent for user info section
-userInfoCtr.innerHTML = `
-    <div class="name-display">
-        <h4>${userQuery().displayName}</h4>
-        <img src="./assets/verified-symbol.jpeg">
-    </div>
-    <p class="grey-p">${userQuery().userName}</p>
-    <p class="grey-p">🗓 Joined ${userQuery().joinedDate}</p>
-    <div class="follow-ctr">
-        <p class="grey-p"><span class="bold-text">${userQuery().followingCount}</span> Following</p>
-        <p class="grey-p"><span class="bold-text">${userQuery().followerCount}</span> Following</p>
-    </div>
-`;
-
-// create content for tweet nav section
-tweetsNav.innerHTML = `
-    <div class="tweet-nav">
-        <div class="tab tab-active">
-            <p>Tweets</p>
-            <div class="tab-border tab-border-active"></div>
+        <p class="grey-p">${userQuery().userName}</p>
+        <p class="grey-p">🗓 Joined ${userQuery().joinedDate}</p>
+        <div class="follow-ctr">
+            <p class="grey-p"><span class="bold-text">${userQuery().followingCount}</span> Following</p>
+            <p class="grey-p"><span class="bold-text">${userQuery().followerCount}</span> Following</p>
         </div>
+    `;
 
-        <div class="tab">
-            <p>Tweets & Replies</p>
-            <div class="tab-border"></div>
+    // create content for tweet nav section
+    tweetsNav.innerHTML = `
+        <div class="tweet-nav">
+            <div class="tab tab-active">
+                <p>Tweets</p>
+                <div class="tab-border tab-border-active"></div>
+            </div>
+
+            <div class="tab">
+                <p>Tweets & Replies</p>
+                <div class="tab-border"></div>
+            </div>
+
+            <div class="tab">
+                <p>Media</p>
+                <div class="tab-border"></div>
+            </div>
+
+            <div class="tab">
+                <p>Likes</p>
+                <div class="tab-border"></div>
+            </div>
         </div>
+    `;
 
-        <div class="tab">
-            <p>Media</p>
-            <div class="tab-border"></div>
-        </div>
+    // for of loop to set the innerHTML for each tweet with text and time stamp
+    for (let tweet of userQuery().tweets) {
+        // function to figoure out how much time has passed since tweet was posted
+        const epochs = [
+            ['year', 31536000],
+            ['month', 2592000],
+            ['day', 86400],
+            ['h', 3600],
+            ['minute', 60],
+            ['second', 1]
+        ];
 
-        <div class="tab">
-            <p>Likes</p>
-            <div class="tab-border"></div>
-        </div>
-    </div>
-`;
-
-// for of loop to set the innerHTML for each tweet with text and time stamp
-for (let tweet of userQuery().tweets) {
-    // function to figoure out how much time has passed since tweet was posted
-    const epochs = [
-        ['year', 31536000],
-        ['month', 2592000],
-        ['day', 86400],
-        ['h', 3600],
-        ['minute', 60],
-        ['second', 1]
-    ];
-
-    const getDuration = (timeAgoInSeconds) => {
-        for (let [name, seconds] of epochs) {
-            const interval = Math.floor(timeAgoInSeconds / seconds);
-            if (interval >= 1) {
-                return {
-                    interval: interval,
-                    epoch: name
-                };
+        const getDuration = (timeAgoInSeconds) => {
+            for (let [name, seconds] of epochs) {
+                const interval = Math.floor(timeAgoInSeconds / seconds);
+                if (interval >= 1) {
+                    return {
+                        interval: interval,
+                        epoch: name
+                    };
+                }
             }
-        }
-    };
+        };
 
-    const timeAgo = (date) => {
-        const timeAgoInSeconds = Math.floor((new Date() - new Date(date)) / 1000);
-        const {interval, epoch} = getDuration(timeAgoInSeconds);
-        // console.log(interval)
-        // console.log(epoch)
-        // console.log(date)
-        // const suffix = interval === 1 ? '' : 's';
-        // return `${interval} ${epoch} ${suffix} ago`;
+        const timeAgo = (date) => {
+            const timeAgoInSeconds = Math.floor((new Date() - new Date(date)) / 1000);
+            const {interval, epoch} = getDuration(timeAgoInSeconds);
+            // console.log(interval)
+            // console.log(epoch)
+            // console.log(date)
+            // const suffix = interval === 1 ? '' : 's';
+            // return `${interval} ${epoch} ${suffix} ago`;
 
-        const postDate = new Date(date);
-        const currentYear = new Date().getFullYear();
-        const postYear = new Date(tweet.timestamp).getFullYear();
-        if(epoch === 'h') {
-            return `${interval}${epoch}`;
-        } else if( currentYear === postYear ) {
-            return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4, -6);
-        } else {
-            return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4);
-        }
-    };
+            const postDate = new Date(date);
+            const currentYear = new Date().getFullYear();
+            const postYear = new Date(tweet.timestamp).getFullYear();
+            if(epoch === 'h') {
+                return `${interval}${epoch}`;
+            } else if( currentYear === postYear ) {
+                return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4, -6);
+            } else {
+                return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4);
+            }
+        };
 
-    // console.log(new Date(userQuery().tweets[1].timestamp).getFullYear(), new Date().getFullYear())
+        // console.log(new Date(userQuery().tweets[1].timestamp).getFullYear(), new Date().getFullYear())
 
-    // create tweet content for each inidividual tweet
-    const tweetDiv = document.createElement('div');
-    const timePassed = timeAgo(tweet.timestamp)
-    tweetDiv.classList.add('tweet-content');
-    tweetDiv.innerHTML = `
-        <img src=${userQuery().avatarURL}>
-        <div>
-            <div class="tweet-name-display">
-                <h4>${userQuery().displayName}</h4>
-                <img src="./assets/verified-symbol.jpeg">
-                <p class="grey-p">${userQuery().userName} • </p>
-                <p class="grey-p">${timePassed}</p>
+        // create tweet content for each inidividual tweet
+        const tweetDiv = document.createElement('div');
+        const timePassed = timeAgo(tweet.timestamp)
+        tweetDiv.classList.add('tweet-content');
+        tweetDiv.innerHTML = `
+            <img src=${userQuery().avatarURL}>
+            <div>
+                <div class="tweet-name-display">
+                    <h4>${userQuery().displayName}</h4>
+                    <img src="./assets/verified-symbol.jpeg">
+                    <p class="grey-p">${userQuery().userName} • </p>
+                    <p class="grey-p">${timePassed}</p>
+                </div>
+                <div class="tweet">
+                    <p>${tweet.text}</p>
+                </div>
             </div>
-            <div class="tweet">
-                <p>${tweet.text}</p>
-            </div>
-        </div>
-    `
-    tweetsCtr.appendChild(tweetDiv);
+        `;
+        tweetsCtr.appendChild(tweetDiv);
+    }
 }
