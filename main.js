@@ -75,6 +75,19 @@ function userQuery() {
 
 // console.log(userQuery())
 
+function allTweets() {
+    let tweetList = [];
+    for(let users in twitterUsers) {
+        let userTweets = twitterUsers[users].tweets
+        userTweets.forEach(tweet => {
+            tweetList.push(tweet.timestamp)
+        })
+    }
+    console.log(tweetList)
+}
+
+allTweets();
+
 // wrapping all of the display code inside if statement to check if the url contains query parameters. If no query paramenters it will display the combined timeline. If url contains query parameters it will go to else block to execute code for individual user timeline
 if(!url.includes('?') && url.indexOf('timeline') > -1) {
     for (let tweet of twitterUsers.user1.tweets) {
