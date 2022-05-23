@@ -77,37 +77,37 @@ function userQuery() {
 
 // function allTweets() {
 //     let tweetList = []
-    // for(let users in twitterUsers) {
-        // tweetList.tweets.push(twitterUsers[users].userName)
-        // tweetList.avatarURL = twitterUsers[users].avatarURL;
+//     for(let users in twitterUsers) {
+//         tweetList.tweets.push(twitterUsers[users].userName)
+//         tweetList.avatarURL = twitterUsers[users].avatarURL;
 
-        // twitterUsers[users].tweets.forEach(tweet => {
+//         twitterUsers[users].tweets.forEach(tweet => {
             
 
-        //     tweetList.push(tweetList.text = tweet.text, tweetList.date = tweet.timestamp)
-        // })
+//             tweetList.push(tweetList.text = tweet.text, tweetList.date = tweet.timestamp)
+//         })
 
-        // tweetList.text = twitterUsers[users].tweets.text
-        // userTweets.forEach(tweet => {
-        //     // converting timestamp to proper value type and then pushing to array
-        //     // tweetList.push(new Date(tweet.timestamp).getTime(), tweet.text)
-        //     tweetList.text = tweet.text
-        // })
-    // }
-    // console.log(tweetList)
+//         tweetList.text = twitterUsers[users].tweets.text
+//         userTweets.forEach(tweet => {
+//             // converting timestamp to proper value type and then pushing to array
+//             // tweetList.push(new Date(tweet.timestamp).getTime(), tweet.text)
+//             tweetList.text = tweet.text
+//         })
+//     }
+//     console.log(tweetList)
    
-    // // sorting tweet list based on date
-    // tweetList.sort(function(x, y) {
-    //     return y - x;
-    // })
+//     // sorting tweet list based on date
+//     tweetList.sort(function(x, y) {
+//         return y - x;
+//     })
 
-    // tweetList.forEach(date => {
-    //     tweetList.push(new Date(date))
-    // })
+//     tweetList.forEach(date => {
+//         tweetList.push(new Date(date))
+//     })
 
-    // tweetList.splice(0, 6)
+//     tweetList.splice(0, 6)
 
-    // console.log(tweetList)
+//     console.log(tweetList)
 // }
 
 // allTweets();
@@ -116,24 +116,36 @@ function userQuery() {
 if(!url.includes('?') && url.indexOf('timeline') > -1) {
     for(let user in twitterUsers) {
         for (let tweet of twitterUsers[user].tweets) {
+            const tweetArr = [];
+            
+            tweetArr.userDisplayName = twitterUsers[user].displayName;
+            tweetArr.userName = twitterUsers[user].userName;
+            tweetArr.avatar = twitterUsers[user].avatarURL;
+            tweetArr.tweet = tweet.text;
+            tweetArr.time = tweet.timestamp
+
+            console.log(tweetArr);
+        
+
             const tweetDiv = document.createElement('div');
             tweetDiv.classList.add('tweet-content');
             tweetDiv.innerHTML = `
-                <img src=${twitterUsers[user].avatarURL}>
+                <img src=${tweetArr.avatar}>
                 <div>
                     <div class="tweet-name-display">
-                        <h4>${twitterUsers[user].displayName}</h4>
+                        <h4>${tweetArr.userDisplayName}</h4>
                         <img src="./assets/verified-symbol.jpeg">
-                        <p class="grey-p">${twitterUsers[user].userName} • </p>
+                        <p class="grey-p">${tweetArr.userName} • </p>
                         <p class="grey-p">NEED TO FIGURE OUT TIME STAMP</p>
                     </div>
                     <div class="tweet">
-                        <p>${tweet.text}</p>
+                        <p>${tweetArr.tweet}</p>
                     </div>
                 </div>
             `;
+            
             tweetsCtr.appendChild(tweetDiv);
-        }
+        } 
     }
 } else {
     // create header section
