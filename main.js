@@ -14,11 +14,11 @@ const twitterUsers = {
             },
             {
                 text: 'Starship to the moon',
-                timestamp: '12/09/2021 18:37:12'
+                timestamp: '12/20/2021 18:37:12'
             },
             {
                 text: 'Out on launch pad, engine swap underway',
-                timestamp: '2/09/2021 12:11:51'
+                timestamp: '2/09/2020 12:11:51'
             }
         ]
     },
@@ -33,15 +33,15 @@ const twitterUsers = {
         tweets: [
             {
                 text: 'Everybody asks, how is the next Windows coming along? But nobody asks how is Bill? :/',
-                timestamp: '12/10/2021 00:01:20'
+                timestamp: '12/12/2021 00:01:20'
             },
             {
                 text: 'Should I start tweeting memes? Let me know in a comment.',
-                timestamp: '10/09/2021 18:37:12'
+                timestamp: '10/25/2021 18:37:12'
             },
             {
                 text: 'In 2020, I read a book every hour.',
-                timestamp: '5/09/2021 12:11:51'
+                timestamp: '5/10/2021 12:11:51'
             }
         ]
     }
@@ -89,6 +89,12 @@ function allTweets() {
     tweetList.sort(function(x, y) {
         return y - x;
     })
+
+    tweetList.forEach(date => {
+        tweetList.push(new Date(date))
+    })
+
+    tweetList.splice(0, 6)
 
     console.log(tweetList)
 }
