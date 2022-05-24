@@ -283,6 +283,7 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
 // use querySelectorAll to get all tweets by class tweet-content
 // set id to tweet-content class div's as the time stamp
 // sort tweet-content class or tweets-ctr id by the timestamp
+// dont' forget to convert the timestamp to the numerical value to sort
 
 // trying to figure out how to select from what is being displayed and then sort based on the display date
 const tweetDate = document.querySelectorAll('.tweet-content');
