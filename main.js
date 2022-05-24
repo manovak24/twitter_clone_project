@@ -268,7 +268,7 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
                     <h4>${userQuery().displayName}</h4>
                     <img src="./assets/verified-symbol.jpeg">
                     <p class="grey-p">${userQuery().userName} • </p>
-                    <p class="grey-p">${timePassed}</p>
+                    <p class="grey-p" id="time-passed">${timePassed}</p>
                 </div>
                 <div class="tweet">
                     <p>${tweet.text}</p>
@@ -278,3 +278,10 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
         tweetsCtr.appendChild(tweetDiv);
     }
 }
+
+// trying to figure out how to select from what is being displayed and then sort based on the display date
+const tweetDate = document.querySelectorAll('#time-passed');
+
+tweetDate.forEach(date => {
+    console.log(date.innerText)
+})
