@@ -261,6 +261,7 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
         const tweetDiv = document.createElement('div');
         const timePassed = timeAgo(tweet.timestamp)
         tweetDiv.classList.add('tweet-content');
+        tweetDiv.id = tweet.timestamp
         tweetDiv.innerHTML = `
             <img src=${userQuery().avatarURL}>
             <div>
@@ -279,9 +280,13 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
     }
 }
 
+// use querySelectorAll to get all tweets by class tweet-content
+// set id to tweet-content class div's as the time stamp
+// sort tweet-content class or tweets-ctr id by the timestamp
+
 // trying to figure out how to select from what is being displayed and then sort based on the display date
-const tweetDate = document.querySelectorAll('#time-passed');
+const tweetDate = document.querySelectorAll('.tweet-content');
 
 tweetDate.forEach(date => {
-    console.log(date.innerText)
+    console.log(date.id)
 })
