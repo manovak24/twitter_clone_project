@@ -14,11 +14,11 @@ const twitterUsers = {
             },
             {
                 text: 'Starship to the moon',
-                timestamp: '12/20/2021 18:37:12'
+                timestamp: '12/20/2020 18:37:12'
             },
             {
                 text: 'Out on launch pad, engine swap underway',
-                timestamp: '2/09/2020 12:11:51'
+                timestamp: '2/09/2021 12:11:51'
             }
         ]
     },
@@ -33,11 +33,11 @@ const twitterUsers = {
         tweets: [
             {
                 text: 'Everybody asks, how is the next Windows coming along? But nobody asks how is Bill? :/',
-                timestamp: '12/12/2020 00:01:20'
+                timestamp: '10/25/2021 18:37:12'
             },
             {
                 text: 'Should I start tweeting memes? Let me know in a comment.',
-                timestamp: '10/25/2021 18:37:12'
+                timestamp: '12/12/2020 00:01:20'
             },
             {
                 text: 'In 2020, I read a book every hour.',
@@ -116,7 +116,7 @@ function userQuery() {
 if(!url.includes('?') && url.indexOf('timeline') > -1) {
     for(let user in twitterUsers) {
         for (let tweet of twitterUsers[user].tweets) {
-            const tweetArr = [];
+            const tweetArr = []
             
             tweetArr.userDisplayName = twitterUsers[user].displayName;
             tweetArr.userName = twitterUsers[user].userName;
