@@ -90,7 +90,7 @@ function userQuery() {
 //         tweetList.text = twitterUsers[users].tweets.text
 //         userTweets.forEach(tweet => {
 //             // converting timestamp to proper value type and then pushing to array
-//             // tweetList.push(new Date(tweet.timestamp).getTime(), tweet.text)
+               // tweetList.push(new Date(tweet.timestamp).getTime(), tweet.text)
 //             tweetList.text = tweet.text
 //         })
 //     }
@@ -286,8 +286,18 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
 // dont' forget to convert the timestamp to the numerical value to sort
 
 // trying to figure out how to select from what is being displayed and then sort based on the display date
-const tweetDate = document.querySelectorAll('.tweet-content');
+const tweetContent = document.querySelectorAll('.tweet-content');
 
-tweetDate.forEach(date => {
-    console.log(date.id)
+const tweetDate = [];
+
+tweetContent.forEach(tweet => {
+    tweetDate.push(new Date(tweet.id).getTime())
 })
+
+console.log(tweetDate)
+
+tweetDate.sort(function(x, y) {
+    return y - x;
+})
+
+console.log(tweetDate)
