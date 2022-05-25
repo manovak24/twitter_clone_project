@@ -1,3 +1,4 @@
+// twitter user object contain
 const twitterUsers = {
     user1: {
         userName: '@elonmusk',
