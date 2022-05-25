@@ -291,13 +291,11 @@ const tweetContent = document.querySelectorAll('.tweet-content');
 const tweetDate = [];
 
 tweetContent.forEach(tweet => {
-    tweetDate.push(new Date(tweet.id).getTime())
+    tweet.id = new Date(tweet.id).getTime()
 })
 
 console.log(tweetDate)
 
-tweetDate.sort(function(x, y) {
-    return y - x;
-})
-
-console.log(tweetDate)
+const divs = [...tweetsCtr.children]
+divs.sort((a, b) => a.id - b.id);
+divs.forEach(div => tweetsCtr.appendChild(div))
