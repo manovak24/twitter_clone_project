@@ -47,9 +47,6 @@ const twitterUsers = {
     }
 }
 
-
-
-
 // declare variables for dom elements
 const headerCtr = document.getElementById('header-ctr');
 const heroCtr = document.getElementById('hero-ctr');
@@ -73,62 +70,62 @@ function userQuery() {
     }
 }
 
-// console.log(userQuery())
+// function to format date based on how twitter formats their post dates
+const timeAgo = (date) => {
+    const epochs = [
+        ['year', 31536000],
+        ['month', 2592000],
+        ['day', 86400],
+        ['h', 3600],
+        ['minute', 60],
+        ['second', 1]
+    ];
 
-// function allTweets() {
-//     let tweetList = []
-//     for(let users in twitterUsers) {
-//         tweetList.tweets.push(twitterUsers[users].userName)
-//         tweetList.avatarURL = twitterUsers[users].avatarURL;
+    const getDuration = (timeAgoInSeconds) => {
+        for (let [name, seconds] of epochs) {
+            const interval = Math.floor(timeAgoInSeconds / seconds);
+            if (interval >= 1) {
+                return {
+                    interval: interval,
+                    epoch: name
+                };
+            }
+        }
+    };
+    const timeAgoInSeconds = Math.floor((new Date() - new Date(date)) / 1000);
+    const {interval, epoch} = getDuration(timeAgoInSeconds);
+    // console.log(interval)
+    // console.log(epoch)
+    // console.log(date)
+    // const suffix = interval === 1 ? '' : 's';
+    // return `${interval} ${epoch} ${suffix} ago`;
 
-//         twitterUsers[users].tweets.forEach(tweet => {
-            
-
-//             tweetList.push(tweetList.text = tweet.text, tweetList.date = tweet.timestamp)
-//         })
-
-//         tweetList.text = twitterUsers[users].tweets.text
-//         userTweets.forEach(tweet => {
-//             // converting timestamp to proper value type and then pushing to array
-               // tweetList.push(new Date(tweet.timestamp).getTime(), tweet.text)
-//             tweetList.text = tweet.text
-//         })
-//     }
-//     console.log(tweetList)
-   
-//     // sorting tweet list based on date
-//     tweetList.sort(function(x, y) {
-//         return y - x;
-//     })
-
-//     tweetList.forEach(date => {
-//         tweetList.push(new Date(date))
-//     })
-
-//     tweetList.splice(0, 6)
-
-//     console.log(tweetList)
-// }
-
-// allTweets();
+    const postDate = new Date(date);
+    const currentYear = new Date().getFullYear();
+    const postYear = new Date(date).getFullYear();
+    if(epoch === 'h') {
+        return `${interval}${epoch}`;
+    } else if( currentYear === postYear ) {
+        return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4, -6);
+    } else {
+        return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4);
+    }
+};
 
 // wrapping all of the display code inside if statement to check if the url contains query parameters. If no query paramenters it will display the combined timeline. If url contains query parameters it will go to else block to execute code for individual user timeline
 if(!url.includes('?') && url.indexOf('timeline') > -1) {
     for(let user in twitterUsers) {
         for (let tweet of twitterUsers[user].tweets) {
-            const tweetArr = []
-            
+            const tweetArr = []       
             tweetArr.userDisplayName = twitterUsers[user].displayName;
             tweetArr.userName = twitterUsers[user].userName;
             tweetArr.avatar = twitterUsers[user].avatarURL;
             tweetArr.tweet = tweet.text;
-            tweetArr.time = tweet.timestamp
-
-            console.log(tweetArr);
-        
+            tweetArr.time = tweet.timestamp;
 
             const tweetDiv = document.createElement('div');
             tweetDiv.classList.add('tweet-content');
+            tweetDiv.id = tweet.timestamp;
             tweetDiv.innerHTML = `
                 <img src=${tweetArr.avatar}>
                 <div>
@@ -136,7 +133,7 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
                         <h4>${tweetArr.userDisplayName}</h4>
                         <img src="./assets/verified-symbol.jpeg">
                         <p class="grey-p">${tweetArr.userName} • </p>
-                        <p class="grey-p">NEED TO FIGURE OUT TIME STAMP</p>
+                        <p class="grey-p">${timeAgo(tweet.timestamp)}</p>
                     </div>
                     <div class="tweet">
                         <p>${tweetArr.tweet}</p>
@@ -212,54 +209,8 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
 
     // for of loop to set the innerHTML for each tweet with text and time stamp
     for (let tweet of userQuery().tweets) {
-        // function to figoure out how much time has passed since tweet was posted
-        const epochs = [
-            ['year', 31536000],
-            ['month', 2592000],
-            ['day', 86400],
-            ['h', 3600],
-            ['minute', 60],
-            ['second', 1]
-        ];
-
-        const getDuration = (timeAgoInSeconds) => {
-            for (let [name, seconds] of epochs) {
-                const interval = Math.floor(timeAgoInSeconds / seconds);
-                if (interval >= 1) {
-                    return {
-                        interval: interval,
-                        epoch: name
-                    };
-                }
-            }
-        };
-
-        const timeAgo = (date) => {
-            const timeAgoInSeconds = Math.floor((new Date() - new Date(date)) / 1000);
-            const {interval, epoch} = getDuration(timeAgoInSeconds);
-            // console.log(interval)
-            // console.log(epoch)
-            // console.log(date)
-            // const suffix = interval === 1 ? '' : 's';
-            // return `${interval} ${epoch} ${suffix} ago`;
-
-            const postDate = new Date(date);
-            const currentYear = new Date().getFullYear();
-            const postYear = new Date(tweet.timestamp).getFullYear();
-            if(epoch === 'h') {
-                return `${interval}${epoch}`;
-            } else if( currentYear === postYear ) {
-                return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4, -6);
-            } else {
-                return postDate.toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"}).slice(4);
-            }
-        };
-
-        // console.log(new Date(userQuery().tweets[1].timestamp).getFullYear(), new Date().getFullYear())
-
         // create tweet content for each inidividual tweet
         const tweetDiv = document.createElement('div');
-        const timePassed = timeAgo(tweet.timestamp)
         tweetDiv.classList.add('tweet-content');
         tweetDiv.id = tweet.timestamp
         tweetDiv.innerHTML = `
@@ -269,7 +220,7 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
                     <h4>${userQuery().displayName}</h4>
                     <img src="./assets/verified-symbol.jpeg">
                     <p class="grey-p">${userQuery().userName} • </p>
-                    <p class="grey-p" id="time-passed">${timePassed}</p>
+                    <p class="grey-p" id="time-passed">${timeAgo(tweet.timestamp)}</p>
                 </div>
                 <div class="tweet">
                     <p>${tweet.text}</p>
@@ -280,22 +231,13 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
     }
 }
 
-// use querySelectorAll to get all tweets by class tweet-content
-// set id to tweet-content class div's as the time stamp
-// sort tweet-content class or tweets-ctr id by the timestamp
-// dont' forget to convert the timestamp to the numerical value to sort
-
-// trying to figure out how to select from what is being displayed and then sort based on the display date
+// the below sorts the tweets based on their dates
 const tweetContent = document.querySelectorAll('.tweet-content');
-
-const tweetDate = [];
 
 tweetContent.forEach(tweet => {
     tweet.id = new Date(tweet.id).getTime()
 })
 
-console.log(tweetDate)
-
-const divs = [...tweetsCtr.children]
-divs.sort((a, b) => a.id - b.id);
-divs.forEach(div => tweetsCtr.appendChild(div))
+const tweetDivs = [...tweetsCtr.children]
+tweetDivs.sort((a, b) => b.id - a.id);
+tweetDivs.forEach(tweetDiv => tweetsCtr.appendChild(tweetDiv))
