@@ -113,8 +113,34 @@ const timeAgo = (date) => {
     }
 };
 
+// creating reusable innerHTML for the NAV since it is not dynamic and used in both index.html and timeline.html
+const navDisplay = `
+        <div class="tweet-nav">
+            <div class="tab tab-active">
+                <p>Tweets</p>
+                <div class="tab-border tab-border-active"></div>
+            </div>
+
+            <div class="tab">
+                <p>Tweets & Replies</p>
+                <div class="tab-border"></div>
+            </div>
+
+            <div class="tab">
+                <p>Media</p>
+                <div class="tab-border"></div>
+            </div>
+
+            <div class="tab">
+                <p>Likes</p>
+                <div class="tab-border"></div>
+            </div>
+        </div>
+`;
+
 // wrapping all of the display code inside if statement to check if the url contains query parameters. If no query paramenters it will display the combined timeline. If url contains query parameters it will go to else block to execute code for individual user timeline
 if(!url.includes('?') && url.indexOf('timeline') > -1) {
+    tweetsNav.innerHTML = navDisplay;
     for(let user in twitterUsers) {
         for (let tweet of twitterUsers[user].tweets) {
             const tweetArr = []       
@@ -184,29 +210,7 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
     `;
 
     // create content for tweet nav section
-    tweetsNav.innerHTML = `
-        <div class="tweet-nav">
-            <div class="tab tab-active">
-                <p>Tweets</p>
-                <div class="tab-border tab-border-active"></div>
-            </div>
-
-            <div class="tab">
-                <p>Tweets & Replies</p>
-                <div class="tab-border"></div>
-            </div>
-
-            <div class="tab">
-                <p>Media</p>
-                <div class="tab-border"></div>
-            </div>
-
-            <div class="tab">
-                <p>Likes</p>
-                <div class="tab-border"></div>
-            </div>
-        </div>
-    `;
+    tweetsNav.innerHTML = navDisplay;
 
     // for of loop to set the innerHTML for each tweet with text and time stamp
     for (let tweet of userQuery().tweets) {
@@ -232,7 +236,7 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
     }
 }
 
-// the below sorts the tweets based on their dates
+// the below sorts the tweet content based on their dates
 const tweetContent = document.querySelectorAll('.tweet-content');
 
 tweetContent.forEach(tweet => {
