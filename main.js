@@ -46,31 +46,6 @@ const twitterUsers = {
             }
         ]
     },
-
-    // Test to make sure the javascript is scalable for more users
-    // user3: {
-    //     userName: '@therealbrovak',
-    //     displayName: 'Mark Novak',
-    //     joinedDate: 'June 2009',
-    //     followingCount: 274,
-    //     followerCount: 53800000,
-    //     avatarURL: '',
-    //     coverPhotoURL: 'assets/billgates-cover.jpeg',
-    //     tweets: [
-    //         {
-    //             text: 'test',
-    //             timestamp: '3/5/2022 18:37:12'
-    //         },
-    //         {
-    //             text: 'test1',
-    //             timestamp: '12/12/2019 00:01:20'
-    //         },
-    //         {
-    //             text: 'test2',
-    //             timestamp: '5/10/2018 12:11:51'
-    //         }
-    //     ]
-    // }
 }
 
 // declare variables for dom elements
