@@ -113,7 +113,7 @@ const timeAgo = (date) => {
     }
 };
 
-// creating reusable innerHTML for the NAV since it is not dynamic and used in both index.html and timeline.html
+// creating variable for reusable innerHTML for the NAV since it is not dynamic and used in both index.html and timeline.html
 const navDisplay = `
         <div class="tweet-nav">
             <div class="tab tab-active">
