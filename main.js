@@ -57,19 +57,18 @@ const tweetsCtr = document.querySelector('.tweets-ctr');
 const url = window.location.href;
 
 // URL search params and query string
-function userQuery() {
-    let userToDisplay;
-    const params = new URLSearchParams(window.location.search);
-    
-    for (const param of params) {
-        for(let user in twitterUsers) {
-            if(param[1] === user) {
-                userToDisplay = twitterUsers[user];
-            }
+
+let userToDisplay;
+const params = new URLSearchParams(window.location.search);
+
+for (const param of params) {
+    for(let user in twitterUsers) {
+        if(param[1] === user) {
+            userToDisplay = twitterUsers[user];
         }
-        return userToDisplay;
     }
 }
+
 
 // function to format date based on how twitter formats their post dates
 const timeAgo = (date) => {
@@ -177,20 +176,20 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
         <div class="back-arrow"> ← </div>    
         <div class="header-info">    
             <div class="name-display">
-                <h4>${userQuery().displayName}</h4>
+                <h4>${userToDisplay.displayName}</h4>
                 <img src="./assets/verified-symbol.jpeg">
             </div>
-            <p class="grey-p">${userQuery().tweets.length} Tweets</p>
+            <p class="grey-p">${userToDisplay.tweets.length} Tweets</p>
         </div>
     `;
 
     // create hero container for background image, profile image, and following button
     heroCtr.innerHTML = `
         <div class="hero-img">
-            <img src=${userQuery().coverPhotoURL}>
+            <img src=${userToDisplay.coverPhotoURL}>
         </div>
         <div class="hero-content">
-            <img src=${userQuery().avatarURL}>
+            <img src=${userToDisplay.avatarURL}>
             <button>Following</button>
         </div>
     `;
@@ -198,14 +197,14 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
     // create conetent for user info section
     userInfoCtr.innerHTML = `
         <div class="name-display">
-            <h4>${userQuery().displayName}</h4>
+            <h4>${userToDisplay.displayName}</h4>
             <img src="./assets/verified-symbol.jpeg">
         </div>
-        <p class="grey-p">${userQuery().userName}</p>
-        <p class="grey-p">🗓 Joined ${userQuery().joinedDate}</p>
+        <p class="grey-p">${userToDisplay.userName}</p>
+        <p class="grey-p">🗓 Joined ${userToDisplay.joinedDate}</p>
         <div class="follow-ctr">
-            <p class="grey-p"><span class="bold-text">${userQuery().followingCount}</span> Following</p>
-            <p class="grey-p"><span class="bold-text">${userQuery().followerCount}</span> Following</p>
+            <p class="grey-p"><span class="bold-text">${userToDisplay.followingCount}</span> Following</p>
+            <p class="grey-p"><span class="bold-text">${userToDisplay.followerCount}</span> Following</p>
         </div>
     `;
 
@@ -213,18 +212,18 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
     tweetsNav.innerHTML = navDisplay;
 
     // for of loop to set the innerHTML for each tweet with text and time stamp
-    for (let tweet of userQuery().tweets) {
+    for (let tweet of userToDisplay.tweets) {
         // create tweet content for each inidividual tweet
         const tweetDiv = document.createElement('div');
         tweetDiv.classList.add('tweet-content');
         tweetDiv.id = tweet.timestamp
         tweetDiv.innerHTML = `
-            <img src=${userQuery().avatarURL}>
+            <img src=${userToDisplay.avatarURL}>
             <div>
                 <div class="tweet-name-display">
-                    <h4>${userQuery().displayName}</h4>
+                    <h4>${userToDisplay.displayName}</h4>
                     <img src="./assets/verified-symbol.jpeg">
-                    <p class="grey-p">${userQuery().userName} • </p>
+                    <p class="grey-p">${userToDisplay.userName} • </p>
                     <p class="grey-p" id="time-passed">${timeAgo(tweet.timestamp)}</p>
                 </div>
                 <div class="tweet">
