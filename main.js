@@ -145,27 +145,27 @@ if(!url.includes('?') && url.indexOf('timeline') > -1) {
     tweetsNav.innerHTML = navDisplay;
     for(let user in twitterUsers) {
         for (let tweet of twitterUsers[user].tweets) {
-            const tweetArr = []       
-            tweetArr.userDisplayName = twitterUsers[user].displayName;
-            tweetArr.userName = twitterUsers[user].userName;
-            tweetArr.avatar = twitterUsers[user].avatarURL;
-            tweetArr.tweet = tweet.text;
-            tweetArr.time = tweet.timestamp;
+            const tweetObj = {};       
+            tweetObj.userDisplayName = twitterUsers[user].displayName;
+            tweetObj.userName = twitterUsers[user].userName;
+            tweetObj.avatar = twitterUsers[user].avatarURL;
+            tweetObj.tweet = tweet.text;
+            tweetObj.time = tweet.timestamp;
 
             const tweetDiv = document.createElement('div');
             tweetDiv.classList.add('tweet-content');
             tweetDiv.id = tweet.timestamp;
             tweetDiv.innerHTML = `
-                <img src=${tweetArr.avatar}>
+                <img src=${tweetObj.avatar}>
                 <div>
                     <div class="tweet-name-display">
-                        <h4>${tweetArr.userDisplayName}</h4>
+                        <h4>${tweetObj.userDisplayName}</h4>
                         <img src="./assets/verified-symbol.jpeg">
-                        <p class="grey-p">${tweetArr.userName} • </p>
+                        <p class="grey-p">${tweetObj.userName} • </p>
                         <p class="grey-p">${timeAgo(tweet.timestamp)}</p>
                     </div>
                     <div class="tweet">
-                        <p>${tweetArr.tweet}</p>
+                        <p>${tweetObj.tweet}</p>
                     </div>
                 </div>
             `;
