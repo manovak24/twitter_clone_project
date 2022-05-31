@@ -49,11 +49,11 @@ const twitterUsers = {
 }
 
 // declare variables for dom elements
-const headerCtr = document.getElementById('header-ctr');
-const heroCtr = document.getElementById('hero-ctr');
-const userInfoCtr = document.getElementById('user-info-ctr');
-const tweetsNav = document.getElementById('tweets-nav');
-const tweetsCtr = document.getElementById('tweets-ctr');
+const headerCtr = document.querySelector('.header-ctr');
+const heroCtr = document.querySelector('.hero-ctr');
+const userInfoCtr = document.querySelector('.user-info-ctr');
+const tweetsNav = document.querySelector('.tweets-nav');
+const tweetsCtr = document.querySelector('.tweets-ctr');
 const url = window.location.href;
 
 // URL search params and query string
