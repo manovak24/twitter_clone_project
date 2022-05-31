@@ -57,17 +57,20 @@ const tweetsCtr = document.querySelector('.tweets-ctr');
 const url = window.location.href;
 
 // URL search params and query string
-
-let userToDisplay;
 const params = new URLSearchParams(window.location.search);
 
-for (const param of params) {
-    for(let user in twitterUsers) {
-        if(param[1] === user) {
-            userToDisplay = twitterUsers[user];
-        }
-    }
-}
+// Below is original solution, but not the best way to accomplish task
+// let userToDisplay;
+// for (const param of params) {
+//     for(let user in twitterUsers) {
+//         if(param[1] === user) {
+//             userToDisplay = twitterUsers[user];
+//         }
+//     }
+// }
+
+// Better soltuion below using the GET method for the URLSearchParams
+const userToDisplay = twitterUsers[params.get('user')];
 
 
 // function to format date based on how twitter formats their post dates
